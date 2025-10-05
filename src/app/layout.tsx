@@ -19,6 +19,10 @@ type Props = {
 export default function RootLayout({ children }: Props) {
     return (
         <html lang="ru">
+        <head>
+            <meta name="google-site-verification" content="0r38RyQh61dBoLIyxVwILq9gnyn8glbioO4hbMH0oKg" />
+            <title>UrbanMoving</title>
+        </head>
         <body className={inter.className}>{children}</body>
         </html>
     )

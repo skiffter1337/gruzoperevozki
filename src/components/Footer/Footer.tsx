@@ -105,7 +105,7 @@ export const Footer: FC<FooterProps> = ({lang, translations}) => {
                             <div className={styles.contacts}>
                                 <div className={styles.contactItem}>
                                     <PhoneOutlined/>
-                                    <span itemProp="telephone">{footerData.phone}</span>
+                                    <span itemProp="telephone" dir="ltr">{footerData.phone}</span>
                                 </div>
                                 <div className={styles.contactItem}>
                                     <MailOutlined/>

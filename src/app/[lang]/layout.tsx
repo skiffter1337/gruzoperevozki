@@ -33,11 +33,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         robots: 'index, follow',
         ...((isHebrew || isEnglish) && {
             alternates: {
-                canonical: 'https://yourdomain.com',  // TODO вставить домен
+                canonical: 'https://urbanmoving.net',
                 languages: {
-                    'ru': 'https://yourdomain.com/ru',
-                    'he': 'https://yourdomain.com/he',
-                    'en': 'https://yourdomain.com/en',  // TODO вставить домен
+                    'ru': 'https://urbanmoving.net/ru',
+                    'he': 'https://urbanmoving.net/he',
+                    'en': 'https://urbanmoving.net/en',
                 }
             }
         })

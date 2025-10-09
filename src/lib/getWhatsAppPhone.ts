@@ -1,3 +1,3 @@
 export const getWhatsAppPhone = () => {
-    return '+79012818032';
+    return '+972508318084';
 };

@@ -30,7 +30,7 @@ function FooterStructuredData({companyName, contactInfo}: {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": companyName,
-        "url": "https://gruzovichok.com", // TODO поменять
+        "url": "https://urbanmoving.net",
         "telephone": contactInfo.phone,
         "email": contactInfo.email,
         "address": {

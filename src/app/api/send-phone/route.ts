@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
             from: process.env.NODE_ENV === 'development'
                 ? 'onboarding@resend.dev'
                 : 'noreply@yourdomain.com',
-            to: process.env.EMAIL_TO || '1ilya.shemyakin@gmail.com',
+            to: process.env.EMAIL_TO || 'urbanmoving.israel@gmail.com',
             subject: `Новый запрос на звонок - ${phone}`,
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

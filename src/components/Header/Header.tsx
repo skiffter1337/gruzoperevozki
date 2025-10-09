@@ -1,6 +1,6 @@
 "use client"
 import {useRouter} from 'next/navigation'
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useRef} from 'react'
 import {Button, Col, Row, Select, Space, Switch} from 'antd'
 import {EyeOutlined, UndoOutlined} from '@ant-design/icons'
 import styles from './Header.module.scss'
@@ -22,6 +22,9 @@ const Header = ({lang}: HeaderProps) => {
     const router = useRouter()
     const translations = useTranslation(lang as 'ru' | 'he' | 'en')
 
+    const panelRef = useRef<HTMLDivElement>(null)
+    const buttonRef = useRef<HTMLButtonElement>(null)
+
     useEffect(() => {
         setLanguage(lang)
         const savedSettings = localStorage.getItem('accessibilitySettings')
@@ -30,6 +33,24 @@ const Header = ({lang}: HeaderProps) => {
             applyAccessibilitySettings(JSON.parse(savedSettings))
         }
     }, [lang])
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (showAccessibilityPanel &&
+                panelRef.current &&
+                !panelRef.current.contains(event.target as Node) &&
+                buttonRef.current &&
+                !buttonRef.current.contains(event.target as Node)) {
+                setShowAccessibilityPanel(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [showAccessibilityPanel])
 
     const handleLanguageChange = (value: string) => {
         setLanguage(value)
@@ -85,11 +106,13 @@ const Header = ({lang}: HeaderProps) => {
                         <Col>
                             <Space size="middle">
                                 <Button
+                                    ref={buttonRef}
                                     type="text"
                                     icon={<EyeOutlined/>}
                                     onClick={toggleAccessibilityPanel}
                                     className={styles.accessibilityButton}
                                     aria-label={translations.header?.accessibilitySettings}
+                                    aria-expanded={showAccessibilityPanel}
                                 />
 
                                 <div className={styles.contacts}>
@@ -110,17 +133,19 @@ const Header = ({lang}: HeaderProps) => {
                 </div>
             </header>
 
-
             {showAccessibilityPanel && (
-                <div className={styles.accessibilityPanel}>
+                <div
+                    ref={panelRef}
+                    className={styles.accessibilityPanel}
+                    role="dialog"
+                    aria-label={translations.header?.accessibilitySettings}
+                >
                     <div className={styles.panelContent}>
                         <h3>{translations.header?.accessibilitySettings}</h3>
 
                         <Space direction="vertical" size="middle">
                             <div className={styles.settingItem}>
-
                                 <span>{translations.header?.highContrast}</span>
-
                                 <Switch
                                     checked={accessibilitySettings.highContrast}
                                     onChange={(checked) => handleAccessibilitySettingChange('highContrast', checked)}

@@ -30,7 +30,7 @@ export const getReviewsData = (lang: 'ru' | 'he' | 'en') => {
                 date: '2024-12-02',
                 rating: 5,
                 text: 'Лучший сервис по переездам! Заказывала переезд из трехкомнатной квартиры. Все сделали быстро, качественно и по адекватной цене. Рекомендую всем!',
-                avatar: '/avatarWoman4.png',
+                avatar: '/avatarWoman4.jpg',
                 service: 'Квартирный переезд'
             },
             {
@@ -72,7 +72,7 @@ export const getReviewsData = (lang: 'ru' | 'he' | 'en') => {
                 date: '2025-09-05',
                 rating: 5,
                 text: 'הזמנתי מעבר דירה כולל אריזה. הם הגיעו עם קופסאות וחומרי אריזה ועשו את העבודה במהירות. אני ממליץ עליהם בחום!',
-                avatar: '/avatarMan7.png',
+                avatar: '/avatarMan7.jpg',
                 service: 'מעבר דירה'
             },
             {
@@ -82,7 +82,7 @@ export const getReviewsData = (lang: 'ru' | 'he' | 'en') => {
                 date: '2025-01-25',
                 rating: 5,
                 text: 'הזמנתי הובלה בעזרת מנוף. החבר\'ה היו נהדרים, הם הגיעו עם שתי משאיות. הם סיימו את העבודה במהירות ועשו עבודה באיכות גבוהה.',
-                avatar: '/avatarMan9.png',
+                avatar: '/avatarMan9.jpg',
                 service: 'העברת משרד'
             }
         ],
@@ -124,7 +124,7 @@ export const getReviewsData = (lang: 'ru' | 'he' | 'en') => {
                 date: '2024-09-23',
                 rating: 5,
                 text: 'We transported a piano and antique furniture. They treated everything with maximum care. Everything was delivered without a single scratch. Many thanks to the team!',
-                avatar: '/avatarMan8.png',
+                avatar: '/avatarMan8.jpg',
                 service: 'Furniture Transportation'
             }
         ]

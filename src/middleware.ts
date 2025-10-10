@@ -1,3 +1,10 @@
+export const i18nConfig = {
+    locales: ['ru', 'he', 'en'] as const,
+    defaultLocale: 'he',
+} as const;
+
+export type Locale = typeof i18nConfig.locales[number];
+
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -16,10 +23,14 @@ export function middleware(request: NextRequest) {
 
     if (pathnameHasLocale) return
 
-    const acceptLanguage = request.headers.get('accept-language') || ''
-    let locale: string = 'ru'
+    if (pathname === '/') {
+        return NextResponse.next()
+    }
 
-    if (acceptLanguage.includes('he')) locale = 'he'
+    const acceptLanguage = request.headers.get('accept-language') || ''
+    let locale: string = 'he'
+
+    if (acceptLanguage.includes('ru')) locale = 'ru'
     else if (acceptLanguage.includes('en')) locale = 'en'
 
     request.nextUrl.pathname = `/${locale}${pathname}`

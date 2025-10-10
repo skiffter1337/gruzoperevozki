@@ -9,5 +9,5 @@ const translations = {
 } as const
 
 export function getServerTranslations(lang: string) {
-    return translations[lang as keyof typeof translations] || translations.ru
+    return translations[lang as keyof typeof translations] || translations.he
 }

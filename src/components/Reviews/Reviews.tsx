@@ -1,11 +1,12 @@
 "use client"
 import {useState} from 'react';
-import {Avatar, Col, Rate, Row} from 'antd';
-import {CalendarOutlined, EnvironmentOutlined, StarFilled, UserOutlined,} from '@ant-design/icons';
+import {Col, Rate, Row} from 'antd';
+import {CalendarOutlined, EnvironmentOutlined, StarFilled,} from '@ant-design/icons';
 import styles from './Reviews.module.scss';
 import {getCompanyStats, getReviewsData} from "@/components/Reviews/model/helpers";
 import {Review, ReviewsTranslations} from "@/components/Reviews/model/types";
 import {CTAForm} from "@/components/CTAForm/CTAForm";
+import Image from "next/image";
 
 interface ReviewsProps {
     lang: 'ru' | 'he' | 'en';
@@ -204,9 +205,9 @@ export const Reviews = ({lang, translations}: ReviewsProps) => {
                                     <article className={styles.reviewContent} itemScope
                                              itemType="https://schema.org/Review">
                                         <div className={styles.reviewHeader}>
-                                            <Avatar
-                                                size={60}
-                                                icon={<UserOutlined/>}
+                                            <Image
+                                                width={60}
+                                                height={60}
                                                 src={reviewsData[currentReview].avatar}
                                                 className={styles.avatar}
                                                 alt={getAltText(reviewsData[currentReview].name)}

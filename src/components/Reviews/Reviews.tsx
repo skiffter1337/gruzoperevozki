@@ -211,6 +211,7 @@ export const Reviews = ({lang, translations}: ReviewsProps) => {
                                                 src={reviewsData[currentReview].avatar}
                                                 className={styles.avatar}
                                                 alt={getAltText(reviewsData[currentReview].name)}
+                                                unoptimized
                                             />
                                             <div className={styles.userInfo}>
                                                 <h3 className={styles.userName}

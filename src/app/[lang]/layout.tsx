@@ -7,8 +7,15 @@ type Props = {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-
     const { lang } = await params;
+
+    if (lang === 'he') {
+        return {
+            title: 'Urban Moving',
+            description: 'Professional moving services in Israel',
+        }
+    }
+
     const { metadata } = await import(`@/locales/${lang}.json`)
 
     const localeMap: Record<string, string> = {
@@ -16,9 +23,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'ru': 'ru_RU',
         'en': 'en_US'
     }
-
-    const isHebrew = lang === 'he'
-    const isEnglish = lang === 'en'
 
     return {
         title: metadata.title,
@@ -31,16 +35,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             locale: localeMap[lang] || 'en_US',
         },
         robots: 'index, follow',
-        ...((isHebrew || isEnglish) && {
-            alternates: {
-                canonical: 'https://urbanmoving.net',
-                languages: {
-                    'ru': 'https://urbanmoving.net/ru',
-                    'he': 'https://urbanmoving.net/he',
-                    'en': 'https://urbanmoving.net/en',
-                }
+        alternates: {
+            canonical: `https://urbanmoving.net/${lang === 'he' ? '' : lang}`,
+            languages: {
+                'ru': 'https://urbanmoving.net/ru',
+                'he': 'https://urbanmoving.net',
+                'en': 'https://urbanmoving.net/en',
             }
-        })
+        }
     }
 }
 
@@ -48,7 +50,6 @@ export default async function LangLayout({
                                              children,
                                              params
                                          }: Props) {
-
     const { lang } = await params;
 
     const directionMap: Record<string, 'rtl' | 'ltr'> = {
@@ -58,8 +59,8 @@ export default async function LangLayout({
     }
 
     return (
-        <div dir={directionMap[lang] || 'ltr'}>
-            {children}
-        </div>
+        <html lang={lang} dir={directionMap[lang] || 'ltr'}>
+        <body>{children}</body>
+        </html>
     )
 }

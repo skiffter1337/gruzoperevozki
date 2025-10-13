@@ -8,7 +8,10 @@ const inter = Inter({subsets: ['latin']})
 export const metadata: Metadata = {
     title: {
         template: '%s | UrbanMoving',
-        default: 'Грузоперевозки и переезды | UrbanMoving',
+        default: 'גרירה והובלות | UrbanMoving',
+    },
+    icons: {
+        icon: '/favicon.ico',
     },
 }
 
@@ -18,7 +21,7 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
     return (
-        <html lang="ru">
+        <html lang="he" dir="rtl">
         <head>
             <meta name="google-site-verification" content="0r38RyQh61dBoLIyxVwILq9gnyn8glbioO4hbMH0oKg" />
         </head>

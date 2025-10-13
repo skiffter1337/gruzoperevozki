@@ -1,14 +1,8 @@
-export const i18nConfig = {
-    locales: ['ru', 'he', 'en'] as const,
-    defaultLocale: 'he',
-} as const;
-
-export type Locale = typeof i18nConfig.locales[number];
-
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 const locales = ['ru', 'he', 'en'] as const
+const defaultLocale = 'he'
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl
@@ -21,17 +15,29 @@ export function middleware(request: NextRequest) {
         locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
     )
 
-    if (pathnameHasLocale) return
+    if (pathname.startsWith(`/${defaultLocale}/`) || pathname === `/${defaultLocale}`) {
+        const newPathname = pathname === `/${defaultLocale}` ? '/' : pathname.replace(`/${defaultLocale}`, '')
+        const newUrl = new URL(newPathname, request.url)
+        return NextResponse.redirect(newUrl)
+    }
+
+    if (pathnameHasLocale) {
+        return NextResponse.next()
+    }
 
     if (pathname === '/') {
         return NextResponse.next()
     }
 
     const acceptLanguage = request.headers.get('accept-language') || ''
-    let locale: string = 'he'
+    let locale: string = defaultLocale
 
     if (acceptLanguage.includes('ru')) locale = 'ru'
     else if (acceptLanguage.includes('en')) locale = 'en'
+
+    if (locale === defaultLocale) {
+        return NextResponse.next()
+    }
 
     request.nextUrl.pathname = `/${locale}${pathname}`
     return NextResponse.redirect(request.nextUrl)

@@ -1,5 +1,5 @@
 "use client"
-import {useRouter} from 'next/navigation'
+import {useRouter, usePathname} from 'next/navigation'
 import {useEffect, useState, useRef} from 'react'
 import {Button, Col, Row, Select, Space, Switch} from 'antd'
 import {EyeOutlined, UndoOutlined} from '@ant-design/icons'
@@ -20,6 +20,7 @@ const Header = ({lang}: HeaderProps) => {
     })
     const [showAccessibilityPanel, setShowAccessibilityPanel] = useState(false)
     const router = useRouter()
+    const pathname = usePathname()
     const translations = useTranslation(lang as 'ru' | 'he' | 'en')
 
     const panelRef = useRef<HTMLDivElement>(null)
@@ -54,7 +55,19 @@ const Header = ({lang}: HeaderProps) => {
 
     const handleLanguageChange = (value: string) => {
         setLanguage(value)
-        router.push(`/${value}`)
+
+        let currentPath = pathname
+        if (pathname.startsWith('/ru/') || pathname.startsWith('/en/')) {
+            currentPath = pathname.substring(3) // Убираем /ru или /en
+        } else if (pathname === '/ru' || pathname === '/en') {
+            currentPath = '/'
+        }
+
+        if (value === 'he') {
+            router.push(currentPath || '/')
+        } else {
+            router.push(`/${value}${currentPath}`)
+        }
     }
 
     const handleAccessibilitySettingChange = (setting: keyof AccessibilitySettings, value: boolean) => {
@@ -121,8 +134,8 @@ const Header = ({lang}: HeaderProps) => {
                                         onChange={handleLanguageChange}
                                         className={styles.languageSelect}
                                         options={[
-                                            {value: 'ru', label: 'RU'},
                                             {value: 'he', label: 'HE'},
+                                            {value: 'ru', label: 'RU'},
                                             {value: 'en', label: 'EN'},
                                         ]}
                                     />

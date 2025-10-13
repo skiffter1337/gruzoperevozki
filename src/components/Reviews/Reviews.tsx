@@ -1,5 +1,5 @@
 "use client"
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Col, Rate, Row} from 'antd';
 import {CalendarOutlined, EnvironmentOutlined, StarFilled,} from '@ant-design/icons';
 import styles from './Reviews.module.scss';
@@ -178,6 +178,13 @@ export const Reviews = ({lang, translations}: ReviewsProps) => {
                 : 'Пожалуйста, введите номер телефона'
     };
 
+    useEffect(() => {
+        reviewsData.forEach(review => {
+            const img = new window.Image();
+            img.src = review.avatar;
+        });
+    }, [reviewsData]);
+
     return (
         <section className={styles.section} id="reviews" itemScope itemType="https://schema.org/Product">
             <ReviewsStructuredData
@@ -193,7 +200,6 @@ export const Reviews = ({lang, translations}: ReviewsProps) => {
                 </div>
                 <Row gutter={[60, 40]}>
                     <Col xs={24} lg={10}>
-                        {/* Блок с отзывами остается без изменений */}
                         <div className={styles.phoneContainer}>
                             <div className={styles.phone}>
                                 <div
@@ -212,6 +218,7 @@ export const Reviews = ({lang, translations}: ReviewsProps) => {
                                                 className={styles.avatar}
                                                 alt={getAltText(reviewsData[currentReview].name)}
                                                 unoptimized
+                                                priority={currentReview === 0}
                                             />
                                             <div className={styles.userInfo}>
                                                 <h3 className={styles.userName}

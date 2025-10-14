@@ -51,6 +51,46 @@ function FooterStructuredData({companyName, contactInfo}: {
     );
 }
 
+// Компонент для стики-кнопок
+function StickyContactButtons({translations, footerData}: {
+    translations: FooterTranslations;
+    footerData: { phone: string };
+}) {
+    const startWhatsAppChat = () => {
+        const phone = getWhatsAppPhone();
+        const message = encodeURIComponent(translations.quickContact.whatsappMessage);
+        window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+    };
+
+    const startPhoneCall = () => {
+        const phoneNumber = footerData.phone;
+        window.location.href = `tel:${phoneNumber}`;
+    };
+
+    return (
+        <div className={styles.stickyButtons}>
+            <button onClick={startWhatsAppChat} className={styles.stickyWhatsappButton} aria-label="WhatsApp">
+                <Image
+                    src="/whatsapp.svg"
+                    width={48}
+                    height={48}
+                    alt="WhatsApp"
+                    priority={true}
+                />
+            </button>
+            <button onClick={startPhoneCall} className={styles.stickyPhoneButton} aria-label="Позвонить">
+                <Image
+                    src="/phone.svg"
+                    width={26}
+                    height={26}
+                    alt="Позвонить"
+                    priority={true}
+                />
+            </button>
+        </div>
+    );
+}
+
 export const Footer: FC<FooterProps> = ({lang, translations}) => {
     const footerData = getFooterData(lang);
     const currentYear = new Date().getFullYear();
@@ -89,126 +129,122 @@ export const Footer: FC<FooterProps> = ({lang, translations}) => {
     };
 
     return (
-        <footer className={styles.footer} itemScope itemType="https://schema.org/LocalBusiness">
-            <FooterStructuredData
-                companyName={translations.header.companyName}
-                contactInfo={footerData}
+        <>
+            {/* Стики-кнопки - рендерятся всегда */}
+            <StickyContactButtons
+                translations={translations.footer}
+                footerData={footerData}
             />
 
-            <div className={styles.container}>
-                <Row gutter={[40, 30]} className={styles.mainContent}>
-                    <Col xs={24} md={8}>
-                        <div className={styles.companyInfo}>
-                            <h3 className={styles.companyName} itemProp="name">
-                                {translations.header.companyName}
-                            </h3>
-                            <div className={styles.contacts}>
-                                <div className={styles.contactItem}>
-                                    <PhoneOutlined/>
-                                    <span itemProp="telephone" dir="ltr">{footerData.phone}</span>
+            <footer className={styles.footer} itemScope itemType="https://schema.org/LocalBusiness">
+                <FooterStructuredData
+                    companyName={translations.header.companyName}
+                    contactInfo={footerData}
+                />
+
+                <div className={styles.container}>
+                    <Row gutter={[40, 30]} className={styles.mainContent}>
+                        <Col xs={24} md={8}>
+                            <div className={styles.companyInfo}>
+                                <h3 className={styles.companyName} itemProp="name">
+                                    {translations.header.companyName}
+                                </h3>
+                                <div className={styles.contacts}>
+                                    <div className={styles.contactItem}>
+                                        <PhoneOutlined/>
+                                        <span itemProp="telephone" dir="ltr">{footerData.phone}</span>
+                                    </div>
+                                    <div className={styles.contactItem}>
+                                        <MailOutlined/>
+                                        <span itemProp="email">{footerData.email}</span>
+                                    </div>
                                 </div>
-                                <div className={styles.contactItem}>
-                                    <MailOutlined/>
-                                    <span itemProp="email">{footerData.email}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </Col>
-
-                    <Col xs={24} md={8}>
-                        <div className={styles.paymentSection}>
-                            <h4 className={styles.sectionTitle}>
-                                <SafetyCertificateOutlined/> {translations.footer.paymentSection.title}
-                            </h4>
-                            <div className={styles.paymentMethods}>
-                                <Image
-                                    src="/visa.svg"
-                                    width={60}
-                                    height={40}
-                                    alt={getAltText('visa')}
-                                />
-                                <Image
-                                    src="/mastercard.svg"
-                                    width={40}
-                                    height={40}
-                                    alt={getAltText('mastercard')}
-                                />
-                                <Image
-                                    src="/google-pay.svg"
-                                    width={60}
-                                    height={40}
-                                    alt={getAltText('google-pay')}
-                                />
-                                <Image
-                                    src="/apple-pay.svg"
-                                    width={60}
-                                    height={40}
-                                    alt={getAltText('apple-pay')}
-                                />
-                                <Image
-                                    src="/bit.svg"
-                                    width={60}
-                                    height={40}
-                                    alt={getAltText('bit')}
-                                />
-                            </div>
-                        </div>
-                    </Col>
-
-                    <Col xs={24} md={8}>
-                        <div className={styles.contactsSection}>
-                            <h4 className={styles.sectionTitle}>{translations.footer.quickContact.title}</h4>
-                            <Flex gap={8}>
-                                <button onClick={startWhatsAppChat} className={styles.whatsappButton}>
-                                    <Image
-                                        src="/whatsapp.svg"
-                                        width={48}
-                                        height={48}
-                                        alt="WhatsApp"
-                                        priority={true}
-                                    />
-                                </button>
-                                <button onClick={startPhoneCall} className={styles.phoneButton}>
-                                    <Image
-                                        src="/phone.svg"
-                                        width={26}
-                                        height={26}
-                                        alt="Позвонить"
-                                        priority={true}
-                                    />
-                                </button>
-                            </Flex>
-                        </div>
-                    </Col>
-                </Row>
-
-                <div className={styles.bottomFooter}>
-                    <Row align="bottom" justify="space-between">
-                        <Col>
-                            <div className={styles.copyright}>
-                                {formatCopyright()}
                             </div>
                         </Col>
-                        {/*<Col>*/}
-                        {/*    <div className={styles.legalLinks}>*/}
-                        {/*        <Link*/}
-                        {/*            href="/privacy-policy"*/}
-                        {/*            className={styles.legalLink}*/}
-                        {/*            itemProp="hasPolicy"*/}
-                        {/*            aria-label={translations.footer.legalLinks.privacyPolicy}*/}
-                        {/*        >*/}
-                        {/*            <FileTextOutlined/> {translations.footer.legalLinks.privacyPolicy}*/}
-                        {/*        </Link>*/}
-                        {/*    </div>*/}
-                        {/*</Col>*/}
-                    </Row>
-                </div>
-            </div>
 
-            {/* Скрытый SEO контент */}
-            <div className={styles.seoContent} aria-hidden="true">
-                <p dangerouslySetInnerHTML={{__html: translations.footer.seoContent}}/>
-            </div>
-        </footer>
+                        <Col xs={24} md={8}>
+                            <div className={styles.paymentSection}>
+                                <h4 className={styles.sectionTitle}>
+                                    <SafetyCertificateOutlined/> {translations.footer.paymentSection.title}
+                                </h4>
+                                <div className={styles.paymentMethods}>
+                                    <Image
+                                        src="/visa.svg"
+                                        width={60}
+                                        height={40}
+                                        alt={getAltText('visa')}
+                                    />
+                                    <Image
+                                        src="/mastercard.svg"
+                                        width={40}
+                                        height={40}
+                                        alt={getAltText('mastercard')}
+                                    />
+                                    <Image
+                                        src="/google-pay.svg"
+                                        width={60}
+                                        height={40}
+                                        alt={getAltText('google-pay')}
+                                    />
+                                    <Image
+                                        src="/apple-pay.svg"
+                                        width={60}
+                                        height={40}
+                                        alt={getAltText('apple-pay')}
+                                    />
+                                    <Image
+                                        src="/bit.svg"
+                                        width={60}
+                                        height={40}
+                                        alt={getAltText('bit')}
+                                    />
+                                </div>
+                            </div>
+                        </Col>
+
+                        <Col xs={24} md={8}>
+                            <div className={styles.contactsSection}>
+                                <h4 className={styles.sectionTitle}>{translations.footer.quickContact.title}</h4>
+                                <Flex gap={32}>
+                                    <button onClick={startWhatsAppChat} className={styles.whatsappButton}>
+                                        <Image
+                                            src="/whatsapp.svg"
+                                            width={48}
+                                            height={48}
+                                            alt="WhatsApp"
+                                            priority={true}
+                                        />
+                                    </button>
+                                    <button onClick={startPhoneCall} className={styles.phoneButton}>
+                                        <Image
+                                            src="/phone.svg"
+                                            width={26}
+                                            height={26}
+                                            alt="Позвонить"
+                                            priority={true}
+                                        />
+                                    </button>
+                                </Flex>
+                            </div>
+                        </Col>
+                    </Row>
+
+                    <div className={styles.bottomFooter}>
+                        <Row align="bottom" justify="space-between">
+                            <Col>
+                                <div className={styles.copyright}>
+                                    {formatCopyright()}
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
+                {/* Скрытый SEO контент */}
+                <div className={styles.seoContent} aria-hidden="true">
+                    <p dangerouslySetInnerHTML={{__html: translations.footer.seoContent}}/>
+                </div>
+            </footer>
+        </>
     );
 };

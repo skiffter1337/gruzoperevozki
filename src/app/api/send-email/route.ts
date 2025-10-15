@@ -8,12 +8,12 @@ export async function POST(request: NextRequest) {
         const formData = await request.json();
 
         const fromEmail = process.env.NODE_ENV === 'development'
-            ? 'onboarding@resend.dev'
-            : 'noreply@yourdomain.com';
+            ? '1ilya.shemyakin@gmail.com'
+            : '1ilya.shemyakin@gmail.com';
 
         const { data, error } = await resend.emails.send({
             from: `UrbanMoving <${fromEmail}>`,
-            to: process.env.EMAIL_TO || 'urbanmoving.israel@gmail.com',
+            to: process.env.EMAIL_TO || '1ilya.shemyakin@gmail.com',
             subject: `Новая заявка от ${formData.name || 'Клиент'}`,
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

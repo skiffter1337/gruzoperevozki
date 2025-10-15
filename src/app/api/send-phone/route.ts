@@ -8,9 +8,9 @@ export async function POST(request: NextRequest) {
         const { phone, source, lang, timestamp } = await request.json();
 
         const { data, error } = await resend.emails.send({
-            from: process.env.NODE_ENV === 'development'
-                ? '1ilya.shemyakin@gmail.com'
-                : '1ilya.shemyakin@gmail.com',
+                from: process.env.NODE_ENV === 'development'
+                    ? 'onboarding@resend.dev'
+                    : 'info@urbanmoving.net',
             to: process.env.EMAIL_TO || '1ilya.shemyakin@gmail.com',
             subject: `Новый запрос на звонок - ${phone}`,
             html: `

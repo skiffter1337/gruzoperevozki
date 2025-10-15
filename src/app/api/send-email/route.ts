@@ -7,7 +7,9 @@ export async function POST(request: NextRequest) {
     try {
         const formData = await request.json();
 
-        const fromEmail = '1ilya.shemyakin@gmail.com'
+        const fromEmail = process.env.NODE_ENV === 'development'
+            ? 'onboarding@resend.dev'
+            : 'info@urbanmoving.net';
 
         const { data, error } = await resend.emails.send({
             from: `UrbanMoving <${fromEmail}>`,

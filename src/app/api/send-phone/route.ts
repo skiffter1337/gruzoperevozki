@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
         const { data, error } = await resend.emails.send({
                 from: 'onboarding@resend.dev',
-            to: process.env.EMAIL_TO || '1ilya.shemyakin@gmail.com',
+            to: process.env.EMAIL_TO || 'urbanmoving.israel@gmail.com',
             subject: `Новый запрос на звонок - ${phone}`,
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

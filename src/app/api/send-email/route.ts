@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
             : 'info@urbanmoving.net';
 
         const { data, error } = await resend.emails.send({
-            from: `UrbanMoving <${fromEmail}>`,
+            from: `onboarding@resend.dev`,
             to: process.env.EMAIL_TO || '1ilya.shemyakin@gmail.com',
             subject: `Новая заявка от ${formData.name || 'Клиент'}`,
             html: `

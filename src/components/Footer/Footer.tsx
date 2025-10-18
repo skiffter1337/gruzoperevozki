@@ -51,6 +51,7 @@ function FooterStructuredData({companyName, contactInfo}: {
     );
 }
 
+
 // Компонент для стики-кнопок
 function StickyContactButtons({translations, footerData}: {
     translations: FooterTranslations;

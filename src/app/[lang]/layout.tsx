@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ReactNode } from "react";
+import GoogleAnalytics from "@/analytics/GoogleAnalytics";
 
 type Props = {
     children: ReactNode
@@ -60,7 +61,9 @@ export default async function LangLayout({
 
     return (
         <html lang={lang} dir={directionMap[lang] || 'ltr'}>
-        <body>{children}</body>
+        <body>{children}
+        <GoogleAnalytics/>
+        </body>
         </html>
     )
 }

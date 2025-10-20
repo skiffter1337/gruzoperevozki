@@ -9,7 +9,7 @@ const inter = Inter({subsets: ['latin']})
 export const metadata: Metadata = {
     title: {
         template: '%s | UrbanMoving',
-        default: 'גרירה והובלות | UrbanMoving',
+        default: 'הובלות דירות ומשרדים | UrbanMoving',
     },
     icons: {
         icon: '/favicon.ico',

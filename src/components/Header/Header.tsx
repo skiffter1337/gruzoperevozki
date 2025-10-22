@@ -119,13 +119,13 @@ const Header = ({lang}: HeaderProps) => {
                                     alt={translations.header?.companyName}
                                 />
                                 <span className={styles.companyName}>{translations.header?.companyName}</span>
-                                <button className={styles.phoneMobile} onClick={startPhoneCall}>+972-50-8318084</button>
+                                <button className={styles.phoneMobile} onClick={startPhoneCall}>050-8318084</button>
 
                             </div>
                         </Col>
                         <Col>
                             <Space size="middle">
-                                <span className={styles.phone}>+972-50-8318084</span>
+                                <span className={styles.phone}>050-8318084</span>
                                 <Button
                                     ref={buttonRef}
                                     type="text"

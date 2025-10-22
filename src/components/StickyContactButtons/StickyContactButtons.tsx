@@ -52,7 +52,7 @@ export function StickyContactButtons({translations, footerData, lang}: {
             </button>
             <button onClick={startPhoneCall} className={styles.stickyPhoneButton} aria-label={currentTexts.phone}>
                 <span className={styles.buttonText}>{currentTexts.phone} </span>
-                +972-50-8318084
+                050-8318084
             </button>
         </div>
     );

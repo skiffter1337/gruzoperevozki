@@ -12,6 +12,9 @@
   max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
 }
 
 .logo {
@@ -29,6 +32,21 @@
     font-size: 20px;
     font-weight: bold;
     color: white;
+  }
+
+  .companyName {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .phoneMobile {
+    all: unset;
+    cursor: pointer;
+
+    @media (min-width: 768px) {
+     display: none;
+    }
   }
 }
 
@@ -119,4 +137,9 @@
   .panelContent {
     padding: 1rem;
   }
+}
+.phone {
+  @media (max-width: 768px) {
+    display: none;
+    }
 }

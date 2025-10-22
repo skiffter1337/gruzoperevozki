@@ -2,12 +2,13 @@
 
 import {FC} from 'react';
 import {Col, Flex, Row} from 'antd';
-import {EnvironmentOutlined, MailOutlined, PhoneOutlined, SafetyCertificateOutlined} from '@ant-design/icons';
+import {MailOutlined, PhoneOutlined, SafetyCertificateOutlined} from '@ant-design/icons';
 import styles from './Footer.module.scss';
 import Image from 'next/image';
 import {FooterTranslations} from "@/components/Footer/model/type";
 import {getFooterData} from "@/components/Footer/model/helpers";
 import {getWhatsAppPhone} from "@/lib/getWhatsAppPhone";
+import {StickyContactButtons} from "@/components/StickyContactButtons/StickyContactButtons";
 
 interface FooterProps {
     lang: 'ru' | 'he' | 'en';
@@ -51,47 +52,6 @@ function FooterStructuredData({companyName, contactInfo}: {
     );
 }
 
-
-// Компонент для стики-кнопок
-function StickyContactButtons({translations, footerData}: {
-    translations: FooterTranslations;
-    footerData: { phone: string };
-}) {
-    const startWhatsAppChat = () => {
-        const phone = getWhatsAppPhone();
-        const message = encodeURIComponent(translations.quickContact.whatsappMessage);
-        window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
-    };
-
-    const startPhoneCall = () => {
-        const phoneNumber = footerData.phone;
-        window.location.href = `tel:${phoneNumber}`;
-    };
-
-    return (
-        <div className={styles.stickyButtons}>
-            <button onClick={startWhatsAppChat} className={styles.stickyWhatsappButton} aria-label="WhatsApp">
-                <Image
-                    src="/whatsapp.svg"
-                    width={48}
-                    height={48}
-                    alt="WhatsApp"
-                    priority={true}
-                />
-            </button>
-            <button onClick={startPhoneCall} className={styles.stickyPhoneButton} aria-label="Позвонить">
-                <Image
-                    src="/phone.svg"
-                    width={26}
-                    height={26}
-                    alt="Позвонить"
-                    priority={true}
-                />
-            </button>
-        </div>
-    );
-}
-
 export const Footer: FC<FooterProps> = ({lang, translations}) => {
     const footerData = getFooterData(lang);
     const currentYear = new Date().getFullYear();
@@ -131,10 +91,10 @@ export const Footer: FC<FooterProps> = ({lang, translations}) => {
 
     return (
         <>
-            {/* Стики-кнопки - рендерятся всегда */}
             <StickyContactButtons
                 translations={translations.footer}
                 footerData={footerData}
+                lang={lang}
             />
 
             <footer className={styles.footer} itemScope itemType="https://schema.org/LocalBusiness">

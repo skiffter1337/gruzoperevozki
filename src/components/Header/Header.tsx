@@ -102,6 +102,11 @@ const Header = ({lang}: HeaderProps) => {
         setShowAccessibilityPanel(!showAccessibilityPanel)
     }
 
+    const startPhoneCall = () => {
+        const phoneNumber = '+972-50-8318084';
+        window.location.href = `tel:${phoneNumber}`;
+    };
+
     return (
         <>
             <header className={styles.header}>
@@ -113,11 +118,14 @@ const Header = ({lang}: HeaderProps) => {
                                     src="/logo.png"
                                     alt={translations.header?.companyName}
                                 />
-                                <span>{translations.header?.companyName}</span>
+                                <span className={styles.companyName}>{translations.header?.companyName}</span>
+                                <button className={styles.phoneMobile} onClick={startPhoneCall}>+972-50-8318084</button>
+
                             </div>
                         </Col>
                         <Col>
                             <Space size="middle">
+                                <span className={styles.phone}>+972-50-8318084</span>
                                 <Button
                                     ref={buttonRef}
                                     type="text"

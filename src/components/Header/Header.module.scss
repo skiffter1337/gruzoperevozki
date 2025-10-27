@@ -43,6 +43,7 @@
   .phoneMobile {
     all: unset;
     cursor: pointer;
+    font-size: 20px;
 
     @media (min-width: 768px) {
      display: none;
@@ -139,6 +140,7 @@
   }
 }
 .phone {
+  font-size: 20px;
   @media (max-width: 768px) {
     display: none;
     }

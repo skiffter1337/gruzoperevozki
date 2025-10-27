@@ -136,20 +136,20 @@ export const getReviewsData = (lang: 'ru' | 'he' | 'en') => {
 export const getCompanyStats = (lang: 'ru' | 'he' | 'en') => {
     const stats = {
         ru: [
-            {icon: <TeamOutlined/>, number: '740+ ', text: 'Довольных клиентов'},
-            {icon: <CheckCircleOutlined/>, number: '1360+', text: 'Успешных переездов'},
+            {icon: <TeamOutlined/>, number: '1600+ ', text: 'Довольных клиентов'},
+            {icon: <CheckCircleOutlined/>, number: '2800+', text: 'Успешных переездов'},
             {icon: <TrophyOutlined/>, number: '7 лет', text: 'На рынке услуг'},
             {icon: <SafetyCertificateOutlined/>, number: '100%', text: 'Страхование груза'}
         ],
         he: [
-            {icon: <TeamOutlined/>, number: '740+ ', text: 'לקוחות מרוצים'},
-            {icon: <CheckCircleOutlined/>, number: '1360+', text: 'הובלות מוצלחים'},
+            {icon: <TeamOutlined/>, number: '1600+ ', text: 'לקוחות מרוצים'},
+            {icon: <CheckCircleOutlined/>, number: '2800+', text: 'הובלות מוצלחים'},
             {icon: <TrophyOutlined/>, number: '7 שנים', text: 'בשוק השירותים'},
-            {icon: <SafetyCertificateOutlined/>, number: '100%', text: 'ביטוח מטען'}
+            {icon: <SafetyCertificateOutlined/>, number: '100%', text: 'איכות השירות'}
         ],
         en: [
-            {icon: <TeamOutlined/>, number: '740+ ', text: 'Satisfied Clients'},
-            {icon: <CheckCircleOutlined/>, number: '1360+', text: 'Successful Moves'},
+            {icon: <TeamOutlined/>, number: '1600+ ', text: 'Satisfied Clients'},
+            {icon: <CheckCircleOutlined/>, number: '2800+', text: 'Successful Moves'},
             {icon: <TrophyOutlined/>, number: '7 years', text: 'In Service Market'},
             {icon: <SafetyCertificateOutlined/>, number: '100%', text: 'Cargo Insurance'}
         ]

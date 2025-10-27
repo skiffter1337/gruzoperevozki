@@ -1,12 +1,20 @@
 "use client"
 import {FC, useState} from 'react';
-import {Card, Checkbox, Col, DatePicker, Flex, Form, Input, message, Row} from 'antd';
+import {Card, Checkbox, Col, DatePicker, Flex, Form, Input, message, Modal, Row} from 'antd';
 import {CalendarOutlined, EnvironmentOutlined, PhoneOutlined, UserOutlined} from '@ant-design/icons';
 import styles from './HeroSection.module.scss';
-import Image from "next/image";
 import {HeroTranslations, IForm} from "@/components/HeroSection/model/types";
-import {getWhatsAppPhone} from "@/lib/getWhatsAppPhone";
 import {CTAForm} from "@/components/CTAForm/CTAForm";
+import {
+    getAddressLocality,
+    getAltText,
+    getAreaServed,
+    getMoversService,
+    getPackingService,
+    getSuccessModalContent
+} from './model/helpers';
+import {getDescription} from "@/components/HeroSection/model/helpers";
+import {SuccessModal} from "@/components/SuccessModal";
 
 interface HeroSectionProps {
     lang: 'ru' | 'he' | 'en';
@@ -22,84 +30,25 @@ function HeroStructuredData({
                                 lang,
                                 companyName
                             }: {
-    lang: string;
+    lang: 'ru' | 'he' | 'en';
     companyName: string;
 }) {
 
+    const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
 
-    const getDescription = () => {
-        switch (lang) {
-            case 'he':
-                return "סבלים מוסמכים למעבר מהיר ובטוח. אריזה, הובלה, הרכבת רהיטים.";
-            case 'en':
-                return "Certified movers for fast and safe relocation. Packing, transportation, furniture assembly.";
-            case 'ru':
-            default:
-                return "Квалифицированные грузчики для быстрого и безопасного переезда. Упаковка, транспортировка, сборка мебели.";
-        }
-    };
-
-    const getAddressLocality = () => {
-        switch (lang) {
-            case 'he':
-                return "תל אביב";
-            case 'en':
-                return "Tel Aviv";
-            case 'ru':
-            default:
-                return "Тель-Авив";
-        }
-    };
-
-    const getAreaServed = () => {
-        switch (lang) {
-            case 'he':
-                return "ישראל";
-            case 'en':
-                return "Israel";
-            case 'ru':
-            default:
-                return "Израиль";
-        }
-    };
-
-    const getMoversService = () => {
-        switch (lang) {
-            case 'he':
-                return {name: "שירותי סבלים", description: "סבלים מקצועיים למעבר דירה"};
-            case 'en':
-                return {name: "Movers Services", description: "Professional movers for relocations"};
-            case 'ru':
-            default:
-                return {name: "Услуги грузчиков", description: "Профессиональные грузчики для переездов"};
-        }
-    };
-
-    const getPackingService = () => {
-        switch (lang) {
-            case 'he':
-                return {name: "אריזת מטען", description: "אריזה איכותית של חפצים למעבר"};
-            case 'en':
-                return {name: "Cargo Packing", description: "Quality packing of items for relocation"};
-            case 'ru':
-            default:
-                return {name: "Упаковка груза", description: "Качественная упаковка вещей для переезда"};
-        }
-    };
-
-    const moversService = getMoversService();
-    const packingService = getPackingService();
+    const moversService = getMoversService(lang);
+    const packingService = getPackingService(lang);
 
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": companyName,
-        "description": getDescription(),
+        "description": getDescription(lang),
         "url": typeof window !== 'undefined' ? window.location.href : "",
         "address": {
             "@type": "PostalAddress",
             "addressCountry": "IL",
-            "addressLocality": getAddressLocality()
+            "addressLocality": getAddressLocality(lang)
         },
         "geo": {
             "@type": "GeoCoordinates",
@@ -108,7 +57,7 @@ function HeroStructuredData({
         },
         "openingHours": "Mo-Su 00:00-23:59",
         "serviceType": "MovingService",
-        "areaServed": getAreaServed(),
+        "areaServed": getAreaServed(lang),
         "makesOffer": [
             {
                 "@type": "Offer",
@@ -141,6 +90,7 @@ export const HeroSection: FC<HeroSectionProps> = ({lang, translations}) => {
     const [form] = Form.useForm();
     const [hasLiftFrom, setHasLiftFrom] = useState(false);
     const [hasLiftTo, setHasLiftTo] = useState(false);
+    const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
     const t = translations.hero;
     const companyName = translations.header.companyName;
 
@@ -179,6 +129,7 @@ export const HeroSection: FC<HeroSectionProps> = ({lang, translations}) => {
                 : 'Пожалуйста, введите номер телефона'
     };
 
+
     const onFinish = async (values: IForm) => {
         try {
             console.log('Sending form data:', values);
@@ -194,12 +145,7 @@ export const HeroSection: FC<HeroSectionProps> = ({lang, translations}) => {
             const result = await response.json();
 
             if (result.success) {
-                const successMessage = lang === 'he'
-                    ? 'הבקשה נשלחה בהצלחה!'
-                    : lang === 'en'
-                        ? 'Request sent successfully!'
-                        : 'Заявка успешно отправлена!';
-                message.success(successMessage);
+                setIsSuccessModalVisible(true);
                 form.resetFields();
             } else {
                 console.error('API error:', result.error);
@@ -221,63 +167,24 @@ export const HeroSection: FC<HeroSectionProps> = ({lang, translations}) => {
         }
     };
 
-    const getAltText = () => {
-        switch (lang) {
-            case 'he':
-                return 'סבלים מקצועיים למעבר דירה בישראל';
-            case 'en':
-                return 'Professional movers for apartment relocation in Israel';
-            case 'ru':
-            default:
-                return 'Профессиональные грузчики для переезда в Израиле';
-        }
+    const handleSuccessModalClose = () => {
+        setIsSuccessModalVisible(false);
     };
 
-    const phone = getWhatsAppPhone();
 
-    const startWhatsAppChat = () => {
-        const message = encodeURIComponent(t.quickContact.whatsappMessage);
-        window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
-    };
-
-    const startPhoneCall = () => {
-        window.location.href = `tel:${phone}`;
-    };
 
     return (
         <section className={styles.hero} id="hero" itemScope itemType="https://schema.org/LocalBusiness">
             <HeroStructuredData lang={lang} companyName={companyName}/>
-
-
             <div className={styles.container}>
                 <Row gutter={[60, 40]}>
                     <Col xs={24} lg={14}>
                         <Flex vertical gap={80}>
-                            <Flex gap={32} justify="center">
-                                <button onClick={startWhatsAppChat} className={styles.whatsappButton}>
-                                    <Image
-                                        src="/whatsapp.svg"
-                                        width={70}
-                                        height={70}
-                                        alt="WhatsApp"
-                                        priority={true}
-                                    />
-                                </button>
-                                <button onClick={startPhoneCall} className={styles.phoneButton}>
-                                    <Image
-                                        src="/phone.svg"
-                                        width={42}
-                                        height={42}
-                                        alt="Call"
-                                        priority={true}
-                                    />
-                                </button>
-                            </Flex>
                             <div className={styles.imageContainer}>
                                 <div className={styles.imageWrapper}>
                                     <img
                                         src="/hero.JPG"
-                                        alt={getAltText()}
+                                        alt={getAltText(lang)}
                                         className={styles.image}
                                         loading="eager"
                                     />
@@ -289,11 +196,11 @@ export const HeroSection: FC<HeroSectionProps> = ({lang, translations}) => {
                                             <meta itemProp="bestRating" content="5"/>
 
                                             <div className={styles.statItem}>
-                                                <span className={styles.statNumber} itemProp="reviewCount">740+</span>
+                                                <span className={styles.statNumber} itemProp="reviewCount">1600+</span>
                                                 <span className={styles.statText}>{t.stats.clients}</span>
                                             </div>
                                             <div className={styles.statItem}>
-                                                <span className={styles.statNumber}>1360+</span>
+                                                <span className={styles.statNumber}>2800+</span>
                                                 <span className={styles.statText}>{t.stats.moves}</span>
                                             </div>
                                         </div>
@@ -513,6 +420,13 @@ export const HeroSection: FC<HeroSectionProps> = ({lang, translations}) => {
                     </Col>
                 </Row>
             </div>
+
+            <SuccessModal
+                isVisible={isSuccessModalVisible}
+                onClose={handleSuccessModalClose}
+                lang={lang}
+                type="form"
+            />
         </section>
     );
 };

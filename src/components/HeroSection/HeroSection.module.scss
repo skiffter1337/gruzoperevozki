@@ -62,7 +62,7 @@
 
 .image {
   width: 100%;
-  height: 620px;
+  height: 720px;
   object-fit: cover;
   transition: transform 0.3s ease;
 
@@ -160,7 +160,7 @@
 
       &:hover,
       &:focus {
-        border-color: var(--primary-green)a;
+        border-color: var(--primary-green);
         box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
       }
     }
@@ -228,13 +228,13 @@
       color: #5a6c7d;
 
       &:hover .ant-checkbox-inner {
-        border-color: #667eea;
+        border-color: var(--primary-green);
       }
     }
 
     .ant-checkbox-checked .ant-checkbox-inner {
-      background-color: #667eea;
-      border-color: #667eea;
+      background-color: var(--primary-green);
+      border-color: var(--primary-green);
     }
 
     .ant-checkbox-wrapper:hover .ant-checkbox-inner,
@@ -449,4 +449,172 @@
   position: relative;
 }
 
+.successModal {
+  :global(.ant-modal-content) {
+    border-radius: 20px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border: none;
+    overflow: hidden;
+  }
 
+  :global(.ant-modal-header) {
+    background: var(--primary-green);
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    padding: 30px 24px 20px;
+    margin-bottom: 0;
+  }
+
+  :global(.ant-modal-title) {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  :global(.ant-modal-body) {
+    padding: 30px 24px;
+    background: transparent;
+  }
+
+  :global(.ant-modal-footer) {
+    border-top: 2px solid #f0f0f0;
+    background: #f8f9fa;
+    border-radius: 0 0 20px 20px;
+    padding: 20px 24px;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  :global(.ant-btn) {
+    height: 50px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  :global(.ant-btn-primary) {
+    background: var(--primary-green);
+    border-color: var(--primary-green);
+    color: white;
+    min-width: 140px;
+
+    &:hover {
+      background: #4a90e2;
+      border-color: #4a90e2;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  :global(.ant-modal-close) {
+    top: 15px;
+    right: 15px;
+
+    :global(.ant-modal-close-x) {
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+// Стили для контента модального окна
+.successContent {
+  text-align: center;
+
+  p {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    line-height: 1.6;
+    margin-bottom: 0;
+    font-weight: 500;
+  }
+}
+
+// Адаптивность для модального окна
+@media (max-width: 768px) {
+  .successModal {
+    :global(.ant-modal) {
+      max-width: 90vw;
+      margin: 0 auto;
+    }
+
+    :global(.ant-modal-content) {
+      border-radius: 16px;
+    }
+
+    :global(.ant-modal-header) {
+      padding: 25px 20px 15px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    :global(.ant-modal-title) {
+      font-size: 1.4rem;
+    }
+
+    :global(.ant-modal-body) {
+      padding: 25px 20px;
+    }
+
+    :global(.ant-modal-footer) {
+      padding: 15px 20px;
+      border-radius: 0 0 16px 16px;
+    }
+
+    :global(.ant-btn) {
+      height: 45px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .successContent {
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .successModal {
+    :global(.ant-modal-header) {
+      padding: 20px 16px 12px;
+    }
+
+    :global(.ant-modal-title) {
+      font-size: 1.3rem;
+    }
+
+    :global(.ant-modal-body) {
+      padding: 20px 16px;
+    }
+
+    :global(.ant-modal-footer) {
+      padding: 12px 16px;
+    }
+
+    :global(.ant-btn) {
+      height: 42px;
+      min-width: 120px;
+    }
+  }
+}

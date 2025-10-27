@@ -32,7 +32,7 @@ function AdvantagesStructuredData({lang, companyName}: { lang: string; companyNa
     const getServiceDescription = () => {
         switch (lang) {
             case 'he':
-                return "שירותים מקצועיים למעבר עם יתרונות: תמיכה 24/7, ביטוח מטען, תשלום גמיש";
+                return "שירותים מקצועיים למעבר עם יתרונות: תמיכה 24/7, איכות השירות, תשלום גמיש";
             case 'en':
                 return "Professional relocation services with advantages: 24/7 support, cargo insurance, flexible payment";
             case 'ru':

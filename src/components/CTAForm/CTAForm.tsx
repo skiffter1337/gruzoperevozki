@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Button, Input, message } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
+import { SuccessModal } from '@/components/SuccessModal/SuccessModal';
 import styles from './CTAForm.module.scss';
 
 interface CTAFormProps {
@@ -23,6 +24,7 @@ interface CTAFormProps {
 export const CTAForm = ({ lang, translations, source, className = '' }: CTAFormProps) => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
 
     const handlePhoneSubmit = async () => {
         if (!phoneNumber.trim()) {
@@ -49,7 +51,7 @@ export const CTAForm = ({ lang, translations, source, className = '' }: CTAFormP
             const result = await response.json();
 
             if (result.success) {
-                message.success(translations.successMessage);
+                setIsSuccessModalVisible(true);
                 setPhoneNumber('');
             } else {
                 message.error(translations.errorMessage);
@@ -68,32 +70,46 @@ export const CTAForm = ({ lang, translations, source, className = '' }: CTAFormP
         }
     };
 
-    return (
-        <div className={`${styles.ctaBlock} ${className}`}>
-            <h4>{translations.title}</h4>
-            <p>{translations.description}</p>
+    const handleSuccessModalClose = () => {
+        setIsSuccessModalVisible(false);
+    };
 
-            <div className={styles.phoneInputContainer}>
-                <Input
-                    placeholder={translations.phonePlaceholder}
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    size="large"
-                    className={styles.phoneInput}
-                    type="tel"
-                />
-                <Button
-                    type="primary"
-                    icon={<SendOutlined />}
-                    loading={isLoading}
-                    onClick={handlePhoneSubmit}
-                    className={styles.sendButton}
-                    size="large"
-                >
-                    {translations.buttonText}
-                </Button>
+    return (
+        <>
+            <div className={`${styles.ctaBlock} ${className}`}>
+                <h4>{translations.title}</h4>
+                <p>{translations.description}</p>
+
+                <div className={styles.phoneInputContainer}>
+                    <Input
+                        placeholder={translations.phonePlaceholder}
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        size="large"
+                        className={styles.phoneInput}
+                        type="tel"
+                    />
+                    <Button
+                        type="primary"
+                        icon={<SendOutlined />}
+                        loading={isLoading}
+                        onClick={handlePhoneSubmit}
+                        className={styles.sendButton}
+                        size="large"
+                    >
+                        {translations.buttonText}
+                    </Button>
+                </div>
             </div>
-        </div>
+
+            {/* Модальное окно успешной отправки */}
+            <SuccessModal
+                isVisible={isSuccessModalVisible}
+                onClose={handleSuccessModalClose}
+                lang={lang}
+                type="phone"
+            />
+        </>
     );
 };

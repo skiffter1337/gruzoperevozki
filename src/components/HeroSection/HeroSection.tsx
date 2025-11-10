@@ -1,18 +1,11 @@
 "use client"
 import {FC, useState} from 'react';
-import {Card, Checkbox, Col, DatePicker, Flex, Form, Input, message, Modal, Row} from 'antd';
+import {Card, Checkbox, Col, DatePicker, Flex, Form, Input, message, Row} from 'antd';
 import {CalendarOutlined, EnvironmentOutlined, PhoneOutlined, UserOutlined} from '@ant-design/icons';
 import styles from './HeroSection.module.scss';
 import {HeroTranslations, IForm} from "@/components/HeroSection/model/types";
 import {CTAForm} from "@/components/CTAForm/CTAForm";
-import {
-    getAddressLocality,
-    getAltText,
-    getAreaServed,
-    getMoversService,
-    getPackingService,
-    getSuccessModalContent
-} from './model/helpers';
+import {getAddressLocality, getAltText, getAreaServed, getMoversService, getPackingService} from './model/helpers';
 import {getDescription} from "@/components/HeroSection/model/helpers";
 import {SuccessModal} from "@/components/SuccessModal";
 
@@ -183,28 +176,11 @@ export const HeroSection: FC<HeroSectionProps> = ({lang, translations}) => {
                             <div className={styles.imageContainer}>
                                 <div className={styles.imageWrapper}>
                                     <img
-                                        src="/hero.JPG"
+                                        src="/hero.jpg"
                                         alt={getAltText(lang)}
                                         className={styles.image}
                                         loading="eager"
                                     />
-                                    <div className={styles.imageOverlay}>
-                                        <div className={styles.stats} itemScope
-                                             itemType="https://schema.org/AggregateRating">
-                                            <meta itemProp="ratingValue" content="4.8"/>
-                                            <meta itemProp="ratingCount" content="500"/>
-                                            <meta itemProp="bestRating" content="5"/>
-
-                                            <div className={styles.statItem}>
-                                                <span className={styles.statNumber} itemProp="reviewCount">1600+</span>
-                                                <span className={styles.statText}>{t.stats.clients}</span>
-                                            </div>
-                                            <div className={styles.statItem}>
-                                                <span className={styles.statNumber}>2800+</span>
-                                                <span className={styles.statText}>{t.stats.moves}</span>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <CTAForm

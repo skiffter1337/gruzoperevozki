@@ -25,6 +25,7 @@ export default function RootLayout({ children }: Props) {
         <html>
         <head>
             <meta name="google-site-verification" content="0r38RyQh61dBoLIyxVwILq9gnyn8glbioO4hbMH0oKg"/>
+            <meta name="google-site-verification" content="dXWEtBoJ7k5LkpJl0XiRg0b3xoELg-pNjGmSZ5BbCwc" />
         </head>
         <body className={inter.className}>
         {children}

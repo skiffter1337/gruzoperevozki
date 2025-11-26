@@ -7,7 +7,10 @@ const defaultLocale = 'he'
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl
 
-    if (pathname.match(/\.(png|PNG|jpg|JPG|jpeg|gif|ico|svg|css|js)$/)) {
+    if (pathname.match(/\.(png|PNG|jpg|JPG|jpeg|gif|ico|svg|css|js|txt|xml)$/) ||
+        pathname === '/robots.txt' ||
+        pathname === '/sitemap.xml' ||
+        pathname === '/ads.txt') {
         return NextResponse.next()
     }
 

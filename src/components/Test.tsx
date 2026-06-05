@@ -6,7 +6,6 @@ const TodoApp = () => {
     const [filter, setFilter] = useState('all');
     const [loading, setLoading] = useState(true);
 
-    // Ошибка 1: забыт cleanup для setInterval
     useEffect(() => {
         fetchTodos();
 
@@ -27,7 +26,6 @@ const TodoApp = () => {
         }
     };
 
-    // Ошибка 2: мутация состояния напрямую (меняет original массив)
     const addTodo = () => {
         if (!inputValue.trim()) return;
 
@@ -36,12 +34,11 @@ const TodoApp = () => {
             title: inputValue,
             completed: false
         };
-        todos.push(newTodo); // мутация!
+        todos.push(newTodo);
         setTodos(todos);
         setInputValue('');
     };
 
-    // Ошибка 3: index как key, нет обработки ошибок
     const toggleTodo = (index) => {
         const newTodos = [...todos];
         newTodos[index].completed = !newTodos[index].completed;
@@ -52,7 +49,6 @@ const TodoApp = () => {
         setTodos(todos.filter(todo => todo.id !== id));
     };
 
-    // Ошибка 4: фильтрация и сортировка вычисляются каждый рендер
     const getFilteredTodos = () => {
         let filtered = todos;
 
@@ -66,7 +62,6 @@ const TodoApp = () => {
         return filtered.sort((a, b) => a.id - b.id);
     };
 
-    // Инлайн-стили (без мемоизации)
     const styles = {
         container: { maxWidth: '500px', margin: '0 auto', padding: '20px' },
         input: { padding: '8px', marginRight: '8px', width: '70%' },
@@ -91,7 +86,6 @@ const TodoApp = () => {
                     style={styles.input}
                     placeholder="Add new todo..."
                 />
-                {/* Ошибка 6: onClick должен вызывать addTodo с проверкой */}
                 <button onClick={addTodo} style={styles.button}>
                     Add
                 </button>
@@ -113,7 +107,6 @@ const TodoApp = () => {
             </div>
 
             <div>
-                {/* Ошибка 7: нет проверки на пустой массив */}
                 {filteredTodos.map((todo, index) => (
                     <div key={index} style={styles.todoItem}> {/* index как key - плохо */}
                         <span
@@ -136,7 +129,6 @@ const TodoApp = () => {
                 ))}
             </div>
 
-            {/* Ошибка 8: счетчик использует todos вместо filteredTodos */}
             <div style={{ marginTop: '20px', textAlign: 'center' }}>
                 Total: {todos.length} items
             </div>
